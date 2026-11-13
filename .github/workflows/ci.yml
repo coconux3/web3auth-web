@@ -17,17 +17,17 @@ jobs:
 
     steps:
       - name: Wiz sensor
-        uses: Web3Auth/.github/.github/actions/wiz-sensor@545f7c255313f85d38a02dc36c4ad01387d03149 # v1.0.0
+        uses: Web3Auth/.github/.github/actions/wiz-sensor@v1.0.0
         with:
           enabled: ${{ vars.WIZ_SENSOR_ENABLED }}
           token: ${{ secrets.WIZ_SENSOR_TOKEN }}
       - name: Check out Git repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
       - name: Set up node
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: ${{ matrix.node }}
           cache: "npm"
@@ -47,7 +47,7 @@ jobs:
       # Set the credentials from repository settings/secrets
       - name: Configure AWS credentials
         if: github.ref == 'refs/heads/master'
-        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION_US }}
@@ -71,7 +71,7 @@ jobs:
         # Invalidate Cloudfront (this action)
       - name: invalidate vue app new s3
         if: github.ref == 'refs/heads/master'
-        uses: chaitanyapotti/cloudfront-update-distribution@b120c0220453e292a43e5563f008f8e9e52858d6 # v5
+        uses: chaitanyapotti/cloudfront-update-distribution@v5
         with:
           cloudfront-distribution-id: ${{ secrets.AWS_CLOUDFRONT_NEW_DEMO_APP_DISTRIBUTION_ID }}
           cloudfront-invalidation-path: "/*"
